@@ -9,4 +9,4 @@ spl_autoload_register(function($class_path){
 
 	if(file_exists($autoload_path))
 		require_once($autoload_path);
-});sqd
+});

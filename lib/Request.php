@@ -16,6 +16,17 @@ class Request
 
 	public function hasGet($var_name)
 	{
+		if(is_array($var_name) && count($var_name) > 0)
+		{
+			foreach($var_name as $key)
+			{
+				if(!array_key_exists($key, $this->get) || empty($this->get[$key]))
+					return false;
+			}
+
+			return true;
+		}
+
 		return (array_key_exists($var_name, $this->get) && !empty($this->get[$var_name]));
 	}
 
@@ -26,6 +37,17 @@ class Request
 
 	public function hasPost($var_name)
 	{
+		if(is_array($var_name) && count($var_name) > 0)
+		{
+			foreach($var_name as $key)
+			{
+				if(!array_key_exists($key, $this->post) || empty($this->post[$key]))
+					return false;
+			}
+
+			return true;
+		}
+
 		return (array_key_exists($var_name, $this->post) && !empty($this->post[$var_name]));
 	}
 
@@ -36,6 +58,17 @@ class Request
 
 	public function hasParameter($var_name)
 	{
+		if(is_array($var_name) && count($var_name) > 0)
+		{
+			foreach($var_name as $key)
+			{
+				if(!array_key_exists($key, $this->parameters) || empty($this->parameters[$key]))
+					return false;
+			}
+
+			return true;
+		}
+
 		return (array_key_exists($var_name, $this->parameters) && !empty($this->parameters[$var_name]));
 	}
 
