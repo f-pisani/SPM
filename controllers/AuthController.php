@@ -25,10 +25,13 @@ class AuthController extends Controller
 			// Form::Registration
 			if($request->hasPost(['fullname', 'email_register', 'pwd', 'pwd_conf', 'register']))
 			{
-				if(!$users->validateFullname($request->post('fullname')))
+				$fullname = trim($request->post('fullname'));
+				$email = trim($request->post('email_register'));
+
+				if(!$users->validateFullname($fullname))
 					$errors["Nom invalide !"] = "Le nom ne peut contenir que des lettres, des tirets et des espaces. Il doit être compris entre 2 et 255 caractères.";
 
-				if(!$users->validateEmail($request->post('email_register')))
+				if(!$users->validateEmail($email))
 					$errors["E-mail invalide !"] = "Le format de l'e-mail est invalide ou ce dernier fait plus de 255 caractères.";
 
 				if($request->post('pwd') != $request->post('pwd_conf'))
@@ -36,8 +39,8 @@ class AuthController extends Controller
 
 				if(count($errors) == 0)
 				{
-					$result = $users->create($request->post('fullname'),
-					               			 $request->post('email_register'),
+					$result = $users->create($fullname,
+					               			 $email,
 								   			 $request->post('pwd'));
 					if($result)
 					{

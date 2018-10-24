@@ -14,8 +14,16 @@
 		<link href="<?= Config::get('BASE_URL').'css/style_responsive.css'; ?>" rel="stylesheet">
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="<?= Config::get('BASE_URL').'js/dashboard.js'; ?>"></script>
+		<script src="<?= Config::get('BASE_URL').'js/colorpicker.js'; ?>"></script>
 	</head>
 	<body>
-		<?= $content ?>
+		<div id="wrapper">
+			<?php include 'navbar.php'; ?>
+			<div id="content">
+				<?php include 'display_msg.php'; ?>
+				<?= $content ?>
+			</div>
+		</div>
 	</body>
 </html>

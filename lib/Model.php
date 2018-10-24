@@ -9,12 +9,17 @@ abstract class Model
 	{
 		return self::getMysqli()->real_escape_string($str);
 	}
-	
+
     protected function rawSQL($sql)
 	{
 		$res = self::getMysqli()->query($sql);
 
         return $res;
+    }
+
+	protected function insert_id()
+	{
+		return self::getMysqli()->insert_id;
     }
 
     protected static function getMysqli()

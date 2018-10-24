@@ -80,6 +80,7 @@ class User extends Model
 		return false;
 	}
 
+
 	/*******************************************************************************************************************
 	 * public static function isLogged()
 	 *
@@ -88,5 +89,16 @@ class User extends Model
 	public static function isLogged()
 	{
 		return (isset($_SESSION['user_id']) && !empty($_SESSION['user_id']));
+	}
+
+
+	/*******************************************************************************************************************
+	 * public static function id()
+	 *
+	 * Return user id or null
+	 */
+	public static function id()
+	{
+		return ($_SESSION['user_id'] ?? null);
 	}
 }

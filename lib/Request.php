@@ -20,14 +20,14 @@ class Request
 		{
 			foreach($var_name as $key)
 			{
-				if(!array_key_exists($key, $this->get) || empty($this->get[$key]))
+				if(!array_key_exists($key, $this->get))
 					return false;
 			}
 
 			return true;
 		}
 
-		return (array_key_exists($var_name, $this->get) && !empty($this->get[$var_name]));
+		return (array_key_exists($var_name, $this->get));
 	}
 
 	public function get($var_name)
@@ -41,14 +41,14 @@ class Request
 		{
 			foreach($var_name as $key)
 			{
-				if(!array_key_exists($key, $this->post) || empty($this->post[$key]))
+				if(!array_key_exists($key, $this->post))
 					return false;
 			}
 
 			return true;
 		}
 
-		return (array_key_exists($var_name, $this->post) && !empty($this->post[$var_name]));
+		return (array_key_exists($var_name, $this->post));
 	}
 
 	public function post($var_name)
@@ -62,14 +62,14 @@ class Request
 		{
 			foreach($var_name as $key)
 			{
-				if(!array_key_exists($key, $this->parameters) || empty($this->parameters[$key]))
+				if(!array_key_exists($key, $this->parameters))
 					return false;
 			}
 
 			return true;
 		}
 
-		return (array_key_exists($var_name, $this->parameters) && !empty($this->parameters[$var_name]));
+		return (array_key_exists($var_name, $this->parameters));
 	}
 
 	public function parameter($var_name)
