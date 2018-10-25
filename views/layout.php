@@ -15,6 +15,7 @@
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="<?= Config::get('BASE_URL').'js/dashboard.js'; ?>"></script>
+		<script src="<?= Config::get('BASE_URL').'js/board.js'; ?>"></script>
 		<script src="<?= Config::get('BASE_URL').'js/colorpicker.js'; ?>"></script>
 	</head>
 	<body>

@@ -46,6 +46,30 @@ class Board extends Model
 
 
 	/*******************************************************************************************************************
+	 * public function update($user_id, $title, $desc, $color)
+	 *
+	 * Update a board
+	 *
+	 * Return insert ID if success; false otherwise
+	 */
+	public function update($user_id, $board_id, $title, $desc, $color)
+	{
+		$user_id = $this->escape_string($user_id);
+		$board_id = $this->escape_string($board_id);
+		$title = $this->escape_string($title);
+		$desc = $this->escape_string($desc);
+		$color = $this->escape_string($color);
+
+		return $this->rawSQL("UPDATE boards SET name = '$title',
+		                                        description = '$desc',
+												color = '$color',
+												updated_at = '".time()."'
+											WHERE id = '$board_id' AND
+											      user_id = '$user_id'");
+	}
+
+
+	/*******************************************************************************************************************
 	 * public function getUserBoards($user_id)
 	 *
 	 * Retrieves boards for a specific user ID
@@ -64,6 +88,20 @@ class Board extends Model
 	 * Return 1 if allowed 0 if user is not allowed.
 	 */
 	public function isUserAllowed($user_id, $board_id)
+	{
+		$user_id = $this->escape_string($user_id);
+		$board_id = $this->escape_string($board_id);
+
+		return $this->rawSQL("SELECT * FROM boards WHERE id = '$board_id' AND user_id = '$user_id'")->num_rows;
+	}
+
+
+	/*******************************************************************************************************************
+	 * public function isUserOwner($user_id, $board_id)
+	 *
+	 * Return 1 if owner 0 if user is not owner.
+	 */
+	public function isUserOwner($user_id, $board_id)
 	{
 		$user_id = $this->escape_string($user_id);
 		$board_id = $this->escape_string($board_id);

@@ -20,17 +20,24 @@ class ColorPicker
 
 			// When a selector is clicked, mark him as selected and update hidden input
 			color_selector.on('click', () => {
-				$(`#${this.id} [name="colorpicker"]`).val(color);
+				$(`#${this.id} [name="colorpicker"]`).val(color).trigger('change');
 				$(`#${this.id} ` + '[data-colorvalue].selected').removeClass('selected');
 				$(`#${this.id} ` + '[data-colorvalue="'+color+'"]').addClass('selected');
 			});
 
 			// Append to the container
 			$(`#${this.id}`).append(color_selector);
-
-			// First color is selected by default
-			if(this.colors[0] == color)
-				color_selector.click();
 		});
+
+
+		if($(`#${this.id}`).attr('data-selected') != undefined)
+		{
+			$(`#${this.id} input[name="colorpicker"]`).val($(`#${this.id}`).attr('data-selected'));
+			$(`#${this.id} ` + '[data-colorvalue="'+$(`#${this.id}`).attr('data-selected')+'"]').addClass('selected');
+		}
+		else
+		{
+			$(`#${this.id} ` + '[data-colorvalue]:first').click();
+		}
 	}
 }
