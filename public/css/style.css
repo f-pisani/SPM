@@ -290,6 +290,14 @@ html, body
 	font-size: 3rem;
 	font-weight: bold;
 	text-align: center;
+	color: white;
+
+	text-decoration: none;
+}
+
+#wrapper #navbar .brand:hover
+{
+	text-decoration: underline;
 }
 
 #wrapper #navbar .links
@@ -305,6 +313,21 @@ html, body
 	flex-direction: row;
 
 	list-style-type: none;
+}
+
+#wrapper #navbar .links ul li a
+{
+	font-family: 'Lato', 'Arial', sans-serif;
+	font-size: 1.2rem;
+	color: white;
+	text-decoration: none;
+
+	margin: auto 16px auto 16px;
+}
+
+#wrapper #navbar .links ul li a:hover
+{
+	text-decoration: underline;
 }
 
 #wrapper #content
@@ -370,13 +393,15 @@ html, body
 .board
 {
 	box-sizing: border-box;
+	display: inline-block;
 
-	width: 25%;
+	width: 20%;
 	height: auto;
 
 	font-weight: bold;
 	font-size: 1.1rem;
 	color: white;
+	text-decoration: none;
 
 	margin: 12px;
 	padding: 6px 14px 6px 14px;
@@ -438,4 +463,33 @@ html, body
 #form-newproject
 {
 	width: 50%;
+}
+
+/***********************************************************************************************************************
+ * WebApp Board
+ */
+#board
+{
+	width: 100%;
+}
+
+#board .header
+{
+	width: 100%;
+
+	padding: 32px;
+}
+
+#board .header .title
+{
+	width: 70%;
+
+	font-family: 'Lato', 'Arial', sans-serif;
+	font-size: 1.2rem;
+	font-weight: bold;
+}
+
+#board .header .desc
+{
+	width: 70%;
 }

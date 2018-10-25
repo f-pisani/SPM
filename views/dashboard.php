@@ -1,19 +1,20 @@
 <?php use Lib\{Config}; ?>
-<?php
-echo var_dump($_POST);
-?>
+
 <div id="dashboard">
 	<a class="board newboard" onClick="showNewBoardModal()" href="javascript:void(0)">
 		<i class="fas fa-plus"></i>&nbsp;&nbsp;Créer un nouveau projet
 	</a>
 	<div class="boards-list">
-		<div class="board">
-			<i class="fas fa-search"></i>&nbsp;&nbsp;P1 testP1 testP1 testP1 testP1 testP1 testP1 test
-		</div>
-
-		<div class="board">
-			<i class="fas fa-search"></i>&nbsp;&nbsp;P2 test
-		</div>
+		<?php
+		foreach($user_boards as $board)
+		{
+		?>
+			<a class="board" href="<?= Config::get('BASE_URL').'board/'.$board['id']; ?>">
+				<i class="fas fa-search"></i>&nbsp;&nbsp;<?= $board['name']; ?>
+			</a>
+		<?php
+		}
+		?>
 	</div>
 </div>
 <div id="modal-newproject">

@@ -39,18 +39,14 @@ function validateNewBoardForm()
 		data: form.serialize(),
 		success: function(data)
 		{
-			alert(data);
 			data = $.parseJSON(data);
+			// Title field error
 			if(data.errors.title != undefined)
 			{
 				$("#form-newproject [name='title']").after($('<div class="form-error">'+data.errors.title+'</div>'));
 			}
 
-			if(data.errors.colorpicker != undefined)
-			{
-				$("#form-newproject #project-colorpicker").after($('<div class="form-error">'+data.errors.colorpicker+'</div>'));
-			}
-
+			// Form validate, redirect to the created board
 			if(data.success == true && data.redirect != undefined)
 				window.location.replace(data.redirect);
 		}
