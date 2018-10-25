@@ -1,21 +1,28 @@
+var init_form = false;
+
 function showNewBoardModal()
 {
 	let navbar_height = $("#navbar").height();
 
 	$("#modal-newproject").css('display', 'block');
-	$("#modal-newproject").css('top', $(document).height());
+	$("#modal-newproject").css('top', $(window).height());
 
-	$("#modal-newproject").css('width', $(document).width());
-	$("#modal-newproject").css('height', $(document).height()-navbar_height);
+	$("#modal-newproject").css('width', $(window).width());
+	$("#modal-newproject").css('height', $(window).height()-navbar_height);
 
 	$("#modal-newproject").animate({top: navbar_height+2}, 250, function(e) {});
 
-	let colorpicker = new ColorPicker("project-colorpicker"); // Initialize color picker
+	if(!init_form)
+	{
+		var colorpicker = new ColorPicker("project-colorpicker"); // Initialize color picker
 
-	$('#form-newproject button[type="submit"]').on('click', (e) => {
-		validateNewBoardForm();
-		e.preventDefault();
-	});
+		$('#form-newproject button[type="submit"]').on('click', (e) => {
+			validateNewBoardForm();
+			e.preventDefault();
+		});
+
+		init_form = true;
+	}
 }
 
 function hideNewBoardModal()

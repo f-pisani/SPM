@@ -475,21 +475,57 @@ html, body
 
 #board .header
 {
+	display: flex;
+	justify-content: space-around;
+	align-items: flex-start;
+	flex-direction: row;
+
 	width: 100%;
 
 	padding: 32px;
+	color: white;
+
+	border-bottom: 2px solid #1c313a;
 }
 
-#board .header .title
+#board .header .infos
 {
-	width: 70%;
+	width: 65%;
+}
 
+#board .header .infos .title
+{
 	font-family: 'Lato', 'Arial', sans-serif;
-	font-size: 1.2rem;
+	font-size: 1.4rem;
 	font-weight: bold;
+
+	margin-bottom: 16px;
 }
 
-#board .header .desc
+#board .header .actions
 {
-	width: 70%;
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-end;
+	flex-direction: column;
+
+	width: 25%;
+
+	padding: 8px;
+}
+
+#board .header .actions .link-btn
+{
+	border-color: #34515e;
+	background-color: #34515e;
+
+	margin: 8px;
+}
+
+#board .header .actions .link-btn:hover
+{
+	border-color: #29434e;
+	background-color: #29434e;
+
+	color: white;
 }

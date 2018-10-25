@@ -1,7 +1,7 @@
 <?php
-namespace Models;
+namespace models;
 
-use Lib\{Configuration, Model};
+use lib\{Configuration, Model};
 
 class Board extends Model
 {

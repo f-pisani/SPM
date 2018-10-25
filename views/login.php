@@ -1,4 +1,4 @@
-<?php use Lib\Config; ?>
+<?php use lib\Config; ?>
 
 <div id="home-forms">
 	<form id="form-register" class="form" action="<?= Config::get('BASE_URL').'login' ?>" method="post">

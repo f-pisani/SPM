@@ -2,7 +2,7 @@
 require_once '../autoload.php';
 require_once '../bootstrap.php';
 
-use Lib\Route;
+use lib\Route;
 
 Route::any('/login', 'AuthController@index');
 Route::any('/logout', 'AuthController@logout');

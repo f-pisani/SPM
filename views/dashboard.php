@@ -1,4 +1,4 @@
-<?php use Lib\{Config}; ?>
+<?php use lib\{Config}; ?>
 
 <div id="dashboard">
 	<a class="board newboard" onClick="showNewBoardModal()" href="javascript:void(0)">

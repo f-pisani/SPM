@@ -1,5 +1,5 @@
 <?php
-namespace Lib;
+namespace lib;
 
 class RouteUriException extends \Exception {};
 
@@ -90,7 +90,7 @@ class RouteUri
 		// Callback format is 'Controller@MethodToCall'
 		if(preg_match_all('/^([A-Za-z0-9_]+)@([A-Za-z0-9_]+)$/', $callback, $callback_split) === 1)
 		{
-			$this->controller = "\\Controllers\\".$callback_split[1][0]; // Controller Class
+			$this->controller = "\\controllers\\".$callback_split[1][0]; // Controller Class
 			$this->controllerMethod = $callback_split[2][0]; // Controller Method
 
 			// ReflectionClass will throw a ReflectionException if className doesn't exists
@@ -105,7 +105,7 @@ class RouteUri
 				return false;
 			}
 
-			if($controllerReflection->isSubclassOf('Lib\Controller') && $controllerReflection->hasMethod($this->controllerMethod))
+			if($controllerReflection->isSubclassOf('lib\Controller') && $controllerReflection->hasMethod($this->controllerMethod))
 				return true;
 			else
 				throw new RouteUriException("RouteUri::registerCallback(): class '$this->controller' does not

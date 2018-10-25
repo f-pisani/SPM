@@ -1,8 +1,8 @@
 <?php
-namespace Controllers;
+namespace controllers;
 
-use Lib\{Config, Controller, View};
-use Models\{User, Board};
+use lib\{Config, Controller, View};
+use models\{User, Board};
 
 class KanbanController extends Controller
 {
@@ -46,9 +46,8 @@ class KanbanController extends Controller
 			$q_board = $boards->getBoard($board_id);
 			if($boards->isUserAllowed(User::id(), $board_id) == 1 && $q_board->num_rows == 1)
 			{
-				$title = "Kanban - Dashboard";
 				$q_board = $q_board->fetch_object();
-				//echo var_dump($q_board->fetch_object());
+				$title = "Kanban - ".$q_board->name;
 
 				return View::view('board', compact('request', 'title', 'q_board'));
 			}

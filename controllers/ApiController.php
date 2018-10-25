@@ -1,8 +1,8 @@
 <?php
-namespace Controllers;
+namespace controllers;
 
-use Lib\{Config, Controller, View};
-use Models\{User, Board};
+use lib\{Config, Controller, View};
+use models\{User, Board};
 
 class ApiController extends Controller
 {

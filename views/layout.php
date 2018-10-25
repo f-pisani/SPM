@@ -1,4 +1,4 @@
-<?php use Lib\Config; ?>
+<?php use lib\Config; ?>
 
 <!DOCTYPE html>
 <html lang="fr">

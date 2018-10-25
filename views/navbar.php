@@ -1,6 +1,6 @@
 <?php
-use Lib\Config;
-use Models\User;
+use lib\Config;
+use models\User;
 ?>
 
 <div id="navbar">
@@ -11,14 +11,14 @@ use Models\User;
 			if(User::isLogged())
 			{
 			?>
-			<li><a href="<?= Config::get('BASE_URL').'dashboard'; ?>">Dashboard</a></li>
-			<li><a href="<?= Config::get('BASE_URL').'logout'; ?>">Déconnexion</a></li>
+			<li><a href="<?= Config::get('BASE_URL').'dashboard'; ?>"><i class="fas fa-home"></i> Dashboard</a></li>
+			<li><a href="<?= Config::get('BASE_URL').'logout'; ?>"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
 			<?php
 			}
 			else
 			{
 			?>
-			<li><a href="<?= Config::get('BASE_URL').'login'; ?>">Inscription / Connexion</a></li>
+			<li><a href="<?= Config::get('BASE_URL').'login'; ?>"><i class="fas fa-sign-in-alt"></i> Inscription / Connexion</a></li>
 			<?php
 			}
 			?>
