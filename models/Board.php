@@ -83,6 +83,31 @@ class Board extends Model
 
 
 	/*******************************************************************************************************************
+	 * public function getUserBoards($user_id)
+	 *
+	 * Retrieves board invitations for a specific user ID
+	 */
+	public function getUserInvitations($user_id)
+	{
+		$user_id = $this->escape_string($user_id);
+
+		$query = "SELECT U.fullname AS owner_name,
+						 U.email AS owner_email,
+		                 B.name AS board_name,
+						 B.created_at AS board_created,
+						 BI.created_at AS invitation_date,
+						 BI.id AS invitation_id
+		          FROM users U, boards B, board_invitations BI
+				  WHERE BI.user_id = '$user_id' AND
+				        B.id = BI.board_id AND
+						U.id = B.user_id
+				  ORDER BY BI.created_at DESC";
+
+		return $this->rawSQL($query);
+	}
+
+
+	/*******************************************************************************************************************
 	 * public function isUserAllowed($user_id, $board_id)
 	 *
 	 * Return 1 if allowed 0 if user is not allowed.
@@ -107,6 +132,98 @@ class Board extends Model
 		$board_id = $this->escape_string($board_id);
 
 		return $this->rawSQL("SELECT * FROM boards WHERE id = '$board_id' AND user_id = '$user_id'")->num_rows;
+	}
+
+
+	/*******************************************************************************************************************
+	 * public function isInvitePending($user_id, $board_id)
+	 *
+	 * Return 1 if pending 0 if no invite
+	 */
+	public function isInvitePending($user_id, $board_id)
+	{
+		$user_id = $this->escape_string($user_id);
+		$board_id = $this->escape_string($board_id);
+
+		return $this->rawSQL("SELECT * FROM board_invitations WHERE accepted = '0' AND board_id = '$board_id' AND user_id = '$user_id'")->num_rows;
+	}
+
+
+	/*******************************************************************************************************************
+	 * public function listInvites($board_id)
+	 *
+	 * Get all invitations pending for $board_id
+	 */
+	public function listInvites($board_id)
+	{
+		$board_id = $this->escape_string($board_id);
+
+		return $this->rawSQL("SELECT U.id AS user_id, U.email, BI.* FROM users U, board_invitations BI
+			                  WHERE BI.board_id = '$board_id' AND BI.user_id = U.id AND BI.accepted = '0' ORDER BY BI.created_at DESC");
+	}
+
+
+	/*******************************************************************************************************************
+	 * public function sendInvite($user_id, $board_id)
+	 *
+	 * Send an invitation to $user_id to join $board_id
+	 */
+	public function sendInvite($user_id, $board_id)
+	{
+		$user_id = $this->escape_string($user_id);
+		$board_id = $this->escape_string($board_id);
+
+		return $this->rawSQL("INSERT INTO board_invitations VALUES(null,
+		                                                           '0',
+															       '$board_id',
+															       '$user_id',
+															       '".time()."',
+															       '".time()."')");
+	}
+
+
+	/*******************************************************************************************************************
+	 * public function cancelInvite($user_id, $board_id)
+	 *
+	 * Cancel an invitation to $user_id to join $board_id
+	 */
+	public function cancelInvite($user_id, $board_id)
+	{
+		$user_id = $this->escape_string($user_id);
+		$board_id = $this->escape_string($board_id);
+
+		return $this->rawSQL("DELETE FROM board_invitations WHERE accepted = '0' AND board_id = '$board_id' AND user_id = '$user_id'");
+	}
+
+
+	/*******************************************************************************************************************
+	 * public function removeMember($user_id, $board_id)
+	 *
+	 * Remove member $user_id from $board_id
+	 */
+	public function removeMember($user_id, $board_id)
+	{
+		$user_id = $this->escape_string($user_id);
+		$board_id = $this->escape_string($board_id);
+
+		$this->rawSQL("DELETE FROM board_invitations WHERE accepted = '1' AND board_id = '$board_id' AND user_id = '$user_id'");
+
+		return $this->rawSQL("DELETE FROM board_user WHERE board_id = '$board_id' AND user_id = '$user_id'");
+	}
+
+
+	/*******************************************************************************************************************
+	 * public function listMembers($board_id)
+	 *
+	 * Get all members for $board_id
+	 */
+	public function listMembers($board_id)
+	{
+		$board_id = $this->escape_string($board_id);
+
+		return $this->rawSQL("SELECT U.id AS user_id, U.email, BU.* FROM users U, board_user BU
+			                  WHERE BU.board_id = '$board_id' AND BU.user_id = U.id
+							  ORDER BY BU.joined_at DESC");
 	}
 
 

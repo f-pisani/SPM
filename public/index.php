@@ -12,6 +12,6 @@ Route::any('/board/{id}', 'KanbanController@board')->where(['id' => '[0-9]+']);
 
 Route::post('/api/board/create', 'ApiController@createBoard');
 Route::post('/api/board/update', 'ApiController@updateBoard');
-//Route::post('/api/board/invite', 'ApiController@inviteBoard');
+Route::post('/api/board/invite', 'ApiController@inviteBoard');
 
 Route::execute();

@@ -1,6 +1,37 @@
 <?php use lib\{Config}; ?>
 
 <div id="dashboard">
+	<h1><i class="fas fa-user-plus"></i> Invitations</h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Projet</th>
+				<th>Date de l'invitation</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+
+		<tbody>
+		<?php
+		foreach($user_invitations as $board_invite)
+		{
+			//echo var_dump($board_invite);
+			?>
+			<tr>
+				<td><?= '<b>'.$board_invite['board_name'].'</b> par'; ?>
+					<?= '<b>'.$board_invite['owner_name'].'</b> (<b>'.$board_invite['owner_email'].'</b>)'; ?></td>
+				<td><?= date('d/m/Y à H:i:s', $board_invite['invitation_date']); ?></td>
+				<td>
+					<a class="link-btn" href="javascript:void(0)" onClick="acceptInvite(<?= $board_invite['invitation_id']; ?>)"><i class="fas fa-check"></i> Accepter</a>
+					<a class="link-btn" href="javascript:void(0)" onClick="declineInvite(<?= $board_invite['invitation_id']; ?>)"><i class="fas fa-times"></i> Refuser</a>
+				</td>
+			</tr>
+			<?php
+		}
+		?>
+		</tbody>
+	</table>
+
 	<a class="board newboard" onClick="showNewBoardModal()" href="javascript:void(0)">
 		<i class="fas fa-plus"></i>&nbsp;&nbsp;Créer un nouveau projet
 	</a>

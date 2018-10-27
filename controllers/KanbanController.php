@@ -20,8 +20,9 @@ class KanbanController extends Controller
 
 			$boards = new Board();
 			$user_boards = $boards->getUserBoards(User::id());
+			$user_invitations = $boards->getUserInvitations(User::id());
 
-			return View::view('dashboard', compact('request', 'title', 'user_boards'));
+			return View::view('dashboard', compact('request', 'title', 'user_invitations', 'user_boards'));
 		}
 
 		header('Location: '.Config::get('BASE_URL').'login');
@@ -47,9 +48,12 @@ class KanbanController extends Controller
 			if($boards->isUserAllowed(User::id(), $board_id) == 1 && $q_board->num_rows == 1)
 			{
 				$q_board = $q_board->fetch_object();
+				$q_members = $boards->listMembers($board_id);
+				$q_invites = $boards->listInvites($board_id);
+
 				$title = "Kanban - ".$q_board->name;
 
-				return View::view('board', compact('request', 'title', 'q_board'));
+				return View::view('board', compact('request', 'title', 'q_board', 'q_members', 'q_invites'));
 			}
 
 			header('Location: '.Config::get('BASE_URL').'dashboard');

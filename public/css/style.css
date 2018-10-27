@@ -17,6 +17,57 @@ html, body
 }
 
 /***********************************************************************************************************************
+ * WebApp Tables
+ */
+ .table
+ {
+	width: 100%;
+
+ 	text-align: left;
+ 	margin-top: 16px;
+ 	margin-bottom: 16px;
+
+ 	border-collapse: collapse;
+ }
+
+ .table tbody tr td, .table thead tr th
+ {
+ 	padding: 12px;
+ }
+
+ .table tbody tr td
+ {
+ 	text-align: justify;
+ 	word-break: keep-all;
+
+ 	vertical-align: middle;
+ }
+
+ .table tbody tr
+ {
+	background-color: transparent;
+
+	transition: 0.2s;
+ }
+
+ .table tbody tr:hover
+ {
+	background-color: rgba(38, 166, 154, 0.1);
+
+	transition: 0.2s;
+ }
+
+ .table thead tr:nth-child(1)
+ {
+ 	border-bottom: 2px solid #009688;
+ }
+
+ .table tbody tr:not(:last-child)
+ {
+ 	border-bottom: 1px solid #202020;
+ }
+
+/***********************************************************************************************************************
  * WebApp Forms
  */
 .form
@@ -98,26 +149,22 @@ html, body
 	resize: vertical;
 }
 
-.link-btn
-{
-	display: inline-block;
-
-	text-decoration: none;
-}
-
 .form-btn, .link-btn
 {
+	display: inline-block;
+	text-decoration: none;
+
 	font-family: 'Lato', 'Nunito', 'Arial', sans-serif;
-	font-size: 1.2rem;
 	font-weight: bold;
+	text-align: center;
 	color: white;
 
 	padding: 8px 32px 8px 32px;
 
-	background-color: #00897b;
+	background-color: #00675b;
 
 	border-radius: 2px;
-	border: 2px solid #00796b;
+	border: 2px solid #00675b;
 	box-shadow: 0 0 1px 0 rgba(41, 67, 78, 0.2) inset, 0 0 1px 0 rgba(41, 67, 78, 0.2);
 	outline: none;
 
@@ -128,8 +175,8 @@ html, body
 {
 	cursor: pointer;
 
-	color: #202020;
-	background-color: white;
+	border-color: #005b4f;
+	background-color: #005b4f;
 
 	transition: 0.15s;
 }
@@ -255,6 +302,7 @@ html, body
 
 	padding: 16px;
 
+	overflow-x: hidden;
 	overflow-y: auto;
 }
 
@@ -454,12 +502,16 @@ html, body
 
 	border-color: #00675b;
 	background-color: #00675b;
+
+	transition: 0.2s;
 }
 
 .board.newboard:hover
 {
 	border-color: #005b4f;
 	background-color: #005b4f;
+
+	transition: 0.2s;
 }
 
 #form-newproject
@@ -558,4 +610,74 @@ html, body
 #form-edit
 {
 	width: 50%;
+}
+
+#members-wrapper
+{
+	display: flex;
+	justify-content: space-around;
+	align-items: flex-start;
+	flex-direction: row;
+}
+
+#members-wrapper .members, #members-wrapper .invites
+{
+	width: 50%;
+
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-direction: column;
+
+	padding: 16px;
+}
+
+#members-wrapper .invites #form-invite
+{
+	width: 75%;
+}
+
+#members-wrapper .members-listing
+{
+	width: 75%;
+
+	position: relative;
+
+	list-style-type: none;
+}
+
+#members-wrapper .members-listing li
+{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-direction: row;
+
+	width: 100%;
+
+	padding: 4px;
+
+	transition: 0.2s;
+}
+
+#members-wrapper .members-listing li:hover
+{
+	border-radius: 2px;
+	background-color: rgba(38, 166, 154, 0.5);
+
+	transition: 0.2s;
+}
+
+#members-wrapper .members-listing .fa-user-times
+{
+	position: absolute;
+	right: 0;
+
+	cursor: pointer;
+}
+
+#members-wrapper .members-listing .member, #members-wrapper .members-listing .member-since
+{
+	font-family: 'Lato', 'Arial', sans-serif;
+	font-weight: bold;
 }

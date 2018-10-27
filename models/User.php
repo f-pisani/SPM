@@ -101,4 +101,58 @@ class User extends Model
 	{
 		return ($_SESSION['user_id'] ?? null);
 	}
+
+
+	/*******************************************************************************************************************
+	 * public static function id()
+	 *
+	 * Return user id or null
+	 */
+	public static function email()
+	{
+		return ($_SESSION['user_email'] ?? null);
+	}
+
+
+	/*******************************************************************************************************************
+	 * public function get($email)
+	 *
+	 * Get an user by his $email
+	 */
+	public function get($email)
+	{
+		$email = $this->escape_string($email);
+
+		return $this->rawSQL("SELECT * FROM users WHERE email = '$email'");
+	}
+
+
+	/*******************************************************************************************************************
+	 * public function exists($email)
+	 *
+	 * Check if an user with $email exists
+	 *
+	 * Return true if success; false otherwise
+	 */
+	public function exists($email)
+	{
+		$email = $this->escape_string($email);
+
+		return $this->rawSQL("SELECT id FROM users WHERE email = '$email'")->num_rows;
+	}
+
+
+	/*******************************************************************************************************************
+	 * public function isMemberOfBoard($email, $board_id)
+	 *
+	 * Check if an user with $email is member of $board_id
+	 *
+	 * Return true if success; false otherwise
+	 */
+	public function isMemberOfBoard($email, $board_id)
+	{
+		$email = $this->escape_string($email);
+
+		return $this->rawSQL("SELECT BU.id FROM users U, board_user BU WHERE U.email = '$email' AND BU.user_id = U.id")->num_rows;
+	}
 }

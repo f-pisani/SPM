@@ -94,4 +94,112 @@ class ApiController extends Controller
 		echo "{}";
 		exit();
 	}
+
+
+	/*******************************************************************************************************************
+	 * public function inviteBoard()
+	 *
+	 * Board invitations
+	 */
+	public function inviteBoard()
+	{
+		if(User::isLogged())
+		{
+			$response = ["success" => false, "errors" => []];
+			$request = $this->request;
+			$users = new User();
+			$boards = new Board();
+
+			if($request->hasPost('action'))
+			{
+				$action = $request->post('action');
+
+				switch($action)
+				{
+					case 'send':
+						if($request->hasPost(['board_id', 'email']))
+						{
+							$board_id = $request->post('board_id');
+							$email = trim($request->post('email'), ENT_QUOTES | ENT_HTML5);
+
+							if($boards->isUserOwner(User::id(), $board_id) && User::email() != $email)
+							{
+								if(!$users->validateEmail($email))
+									$response["errors"]["email"] = "Le format de l'adresse email est invalide.";
+
+								if(!$users->exists($email))
+									$response["errors"]["email"] = "Aucun utilisateur avec cette adresse email.";
+
+								if($users->isMemberOfBoard($email, $board_id))
+									$response["errors"]["email"] = "L'utilisateur est déjà membre de ce projet.";
+
+								if(count($response["errors"]) == 0)
+								{
+									$q_user = $users->get($email)->fetch_object();
+									if(!$boards->isInvitePending($q_user->id, $board_id))
+									{
+										$response["success"] = true;
+										$response["data"]["user_id"] = $q_user->id;
+										$response["data"]["email"] = $q_user->email;
+										$response["data"]["date"] = date('d/m/Y à H:i:s', time());
+										$boards->sendInvite($q_user->id, $board_id);
+									}
+									else
+										$response["errors"]["email"] = "Une invitation a déjà été envoyée à l'utilisateur.";
+								}
+
+								echo json_encode($response);
+								exit();
+							}
+						}
+					break;
+
+					case 'cancel':
+						if($request->hasPost(['board_id', 'user_id']))
+						{
+							$board_id = $request->post('board_id');
+							$user_id = $request->post('user_id');
+
+							if($boards->isUserOwner(User::id(), $board_id))
+							{
+								if($boards->cancelInvite($user_id, $board_id))
+									$response["success"] = true;
+
+								echo json_encode($response);
+								exit();
+							}
+						}
+					break;
+
+					case 'remove':
+						if($request->hasPost(['board_id', 'user_id']))
+						{
+							$board_id = $request->post('board_id');
+							$user_id = $request->post('user_id');
+
+							if($boards->isUserOwner(User::id(), $board_id))
+							{
+								if($boards->removeMember($user_id, $board_id))
+									$response["success"] = true;
+
+								echo json_encode($response);
+								exit();
+							}
+						}
+					break;
+
+					case 'accept': break;
+
+					case 'decline': break;
+
+					case 'leave': break;
+
+					default: ;
+				}
+			}
+		}
+
+		echo "{}";
+		exit();
+	}
 }
