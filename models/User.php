@@ -24,7 +24,7 @@ class User extends Model
 	public function validateEmail($email)
 	{
 		// Regex source: https://projects.lukehaas.me/regexhub/
-		return (preg_match('/^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/', $email) && strlen($email) <= 255);
+		return (preg_match('/^[^\W][a-zA-Z0-9_\-]+(\.[a-zA-Z0-9_\-]+)*\@[a-zA-Z0-9_\-]+(\.[a-zA-Z0-9_\-]+)*\.[a-zA-Z]{2,4}$/', $email) && strlen($email) <= 255);
 	}
 
 

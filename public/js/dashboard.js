@@ -59,3 +59,53 @@ function validateNewBoardForm()
 		}
 	});
 }
+
+function acceptInvite(invitation_id)
+{
+	var url = window.location.protocol+'//'+window.location.hostname+':'+window.location.port+'/api/board/invite';
+
+    $.ajax({
+		type: "POST",
+		url: url,
+		data: {action: 'accept', invitation_id: invitation_id},
+		success: function(data)
+		{
+			data = $.parseJSON(data);
+
+			$(".table tbody tr[data-invitationid='"+invitation_id+"']").slideUp(400, () => {
+				$(this).remove();
+			});
+
+			if($(".table tbody tr").length == 0)
+			{
+				$(".table").slideUp(400, () => { $(this).remove(); });
+				$("h1").slideUp(400, () => { $(this).remove(); });
+			}
+		}
+	});
+}
+
+function declineInvite(invitation_id)
+{
+	var url = window.location.protocol+'//'+window.location.hostname+':'+window.location.port+'/api/board/invite';
+
+    $.ajax({
+		type: "POST",
+		url: url,
+		data: {action: 'decline', invitation_id: invitation_id},
+		success: function(data)
+		{
+			data = $.parseJSON(data);
+
+			$(".table tbody tr[data-invitationid='"+invitation_id+"']").slideUp(400, () => {
+				$(this).remove();
+			});
+			
+			if($(".table tbody tr").length == 0)
+			{
+				$(".table").slideUp(400, () => { $(this).remove(); });
+				$("h1").slideUp(400, () => { $(this).remove(); });
+			}
+		}
+	});
+}

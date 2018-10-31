@@ -137,6 +137,7 @@ html, body
 	box-shadow: 0px 0px 8px #4db6ac;
 
 	transition: 0.2s;
+	transition-timing-function: linear;
 }
 
 .form-textarea
@@ -147,6 +148,8 @@ html, body
 	min-height: 200px;
 
 	resize: vertical;
+
+	transition-timing-function: linear;
 }
 
 .form-btn, .link-btn
@@ -680,4 +683,130 @@ html, body
 {
 	font-family: 'Lato', 'Arial', sans-serif;
 	font-weight: bold;
+}
+
+#board .board-lists-container
+{
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-direction: row;
+
+	padding: 32px;
+}
+
+#board .board-lists-container .board-list
+{
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	flex-direction: column;
+
+	width: 20%;
+
+	color: white;
+
+	border-radius: 4px;
+}
+
+#board .board-lists-container .board-list .board-list-header, #board .board-lists-container .board-list .board-list-footer
+{
+	width: 100%;
+
+	padding: 4px;
+
+	font-family: 'Lato', 'Arial', sans-serif;
+	font-size: 1.1rem;
+	font-weight: bold;
+	text-align: center;
+}
+
+#board .board-lists-container .board-list .board-list-tasks
+{
+	box-sizing: border-box;
+
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-direction: column;
+
+	width: 100%;
+	max-height: 700px;
+
+	overflow-y: scroll;
+
+	color: #202020;
+
+	padding: 8px;
+}
+
+#board .board-lists-container .board-list .board-list-tasks::-webkit-scrollbar {
+    width: 8px;
+}
+
+
+#board .board-lists-container .board-list .board-list-tasks::-webkit-scrollbar-track {
+}
+
+
+#board .board-lists-container .board-list .board-list-tasks::-webkit-scrollbar-thumb {
+    background: #202020;
+    border-radius: 3px;
+}
+
+#board .board-lists-container .board-list .board-list-tasks .task
+{
+	box-sizing: border-box;
+
+	width: 100%;
+
+	padding: 4px;
+	margin-bottom: 8px;
+
+	background-color: #fafafa;
+	border-radius: 3px;
+}
+
+#board .board-lists-container .board-list .board-list-tasks .task-footer
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+
+	margin-top: 8px;
+}
+
+#board .board-lists-container .board-list .board-list-tasks .task-footer .author
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+
+	font-weight: bold;
+}
+
+#board .board-lists-container .board-list .board-list-tasks .task-footer .author img
+{
+	width: 28px;
+	height: 28px;
+
+	border-radius: 50%;
+	background-color: #202020;
+	border: 1px solid #202020;
+}
+
+#board .board-lists-container .board-list .board-list-footer
+{
+	text-align: left;
+	color: white;
+	padding-left: 8px;
+
+	text-decoration: none;
+}
+
+#board .board-lists-container .board-list .board-list-footer:hover
+{
+	text-decoration: underline;
 }

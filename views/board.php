@@ -1,4 +1,7 @@
-<?php use lib\{Config}; ?>
+<?php
+use lib\{Config};
+use models\{User};
+?>
 
 <div id="board">
 	<div class="header" style="background-color: #<?= $q_board->color; ?>">
@@ -9,12 +12,50 @@
 				echo substr($q_board->description, 0, 255).'..<i class="fas fa-caret-down" onClick="toggleBoardDesc()"></i>';
 			else
 				echo $q_board->description;
-			?>
-			</pre>
+			?></pre>
 		</div>
 		<div class="actions">
-			<a class="link-btn" href="javascript:void(0)" onClick="showBoardSettingsModal()"><i class="fas fa-cog"></i> Configuration</a>
-			<a class="link-btn" href="javascript:void(0)" onClick="showBoardInvitesModal()"><i class="fas fa-users"></i> Membres</a>
+			<?php
+			if(User::id() == $q_board->user_id)
+			{
+			// Board Owner (Administration)
+			?>
+			<a class="link-btn" href="javascript:void(0)" onClick="showBoardSettingsModal()"><i class="fas fa-cog"></i>&nbsp;&nbsp;Configuration</a>
+			<a class="link-btn" href="javascript:void(0)" onClick="showBoardInvitesModal()"><i class="fas fa-users"></i>&nbsp;&nbsp;Membres</a>
+			<?php
+			}
+			else
+			{
+			// Member action
+			?>
+			<a class="link-btn" href="javascript:void(0)" onClick="leaveBoard(<?= $q_board->id ?>)"><i class="fas fa-times"></i>&nbsp;&nbsp;Quitter le projet</a>
+			<?php
+			}
+			?>
+		</div>
+	</div>
+	<div class="board-lists-container">
+		<div class="board-list" style="background-color: #<?= $q_board->color; ?>">
+			<div class="board-list-header">To Do</div>
+			<div class="board-list-tasks">
+				<?php
+				for($i=0; $i<20; $i++)
+				{
+				?>
+				<div class="task">
+					Commit Push Publish Repeat
+					Commit Push Publish Repeat
+					Commit Push Publish Repeat
+					<div class="task-footer">
+						<i class="fas fa-bars"></i>
+						<span class="author">Florian Pisani&nbsp;<img src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png"></span>
+					</div>
+				</div>
+				<?php
+				}
+				?>
+			</div>
+			<a class="board-list-footer" href="javascript:void(0)"><i class="fas fa-plus"></i>&nbsp;&nbsp;Nouvelle tâche</a>
 		</div>
 	</div>
 </div>

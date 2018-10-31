@@ -63,44 +63,4 @@ class KanbanController extends Controller
 		header('Location: '.Config::get('BASE_URL').'login');
 		exit();
 	}
-
-
-	/*******************************************************************************************************************
-	 * public function settings()
-	 *
-	 * Display a specific board settings
-	 */
-	public function settings()
-	{
-		if(User::isLogged())
-		{
-			$request = $this->request;
-			$title = "Kanban - Dashboard";
-
-			return View::view('dashboard', compact('request', 'title'));
-		}
-
-		header('Location: '.Config::get('BASE_URL').'login');
-		exit();
-	}
-
-
-	/*******************************************************************************************************************
-	 * public function invitations()
-	 *
-	 * Display a specific board invitations
-	 */
-	public function invitations()
-	{
-		if(User::isLogged())
-		{
-			$request = $this->request;
-			$title = "Kanban - Dashboard";
-
-			return View::view('dashboard', compact('request', 'title'));
-		}
-
-		header('Location: '.Config::get('BASE_URL').'login');
-		exit();
-	}
 }

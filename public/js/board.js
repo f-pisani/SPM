@@ -37,7 +37,7 @@ function showBoardSettingsModal()
 		$("#modal-settings").css('display', 'block');
 		$("#modal-settings").css('top', $(window).height());
 		$("#modal-settings").css('width', $(window).width());
-		$("#modal-settings").css('min-height', $(window).height()-offset_top);
+		$("#modal-settings").css('min-height', $(document).height()-offset_top);
 		$("#modal-settings").animate({top: offset_top+2}, 250);
 
 		if(!init_form)
@@ -114,7 +114,7 @@ function showBoardInvitesModal()
 		$("#modal-invites").css('display', 'block');
 		$("#modal-invites").css('top', $(window).height());
 		$("#modal-invites").css('width', $(window).width());
-		$("#modal-invites").css('min-height', $(window).height()-offset_top);
+		$("#modal-invites").css('min-height', $(document).height()-offset_top);
 		$("#modal-invites").animate({top: offset_top+2}, 250);
 
 		if(!init_invitesForm)
@@ -186,7 +186,11 @@ function removeMember(user_id)
 			data = $.parseJSON(data);
 
 			if(data.success == true)
-				$(".members .members-listing li[data-userid='"+user_id+"']").remove();
+			{
+				$(".members .members-listing li[data-userid='"+user_id+"']").slideUp(400, () => {
+					$(this).remove();
+				});
+			}
 		}
 	});
 }
@@ -206,7 +210,29 @@ function cancelInvite(user_id)
 			data = $.parseJSON(data);
 
 			if(data.success == true)
-				$(".invites .members-listing li[data-userid='"+user_id+"']").remove();
+			{
+				$(".invites .members-listing li[data-userid='"+user_id+"']").slideUp(400, () => {
+					$(this).remove();
+				});
+			}
+		}
+	});
+}
+
+function leaveBoard(board_id)
+{
+	var form = $("#form-invite");
+	var url = form.attr('action');
+
+    $.ajax({
+		type: "POST",
+		url: url,
+		data: {action: 'leave', board_id: board_id},
+		success: function(data)
+		{
+			data = $.parseJSON(data);
+
+			window.location.replace(window.location.protocol+'//'+window.location.hostname+':'+window.location.port+'/dashboard');
 		}
 	});
 }

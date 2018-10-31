@@ -21,11 +21,11 @@ class ApiController extends Controller
 
 			if($request->hasPost(['title', 'desc', 'colorpicker']))
 			{
-				$title = trim(htmlentities($request->post('title'), ENT_QUOTES | ENT_HTML5));
+				$title = trim(htmlspecialchars($request->post('title'), ENT_QUOTES | ENT_HTML5));
 				if(!$boards->validateBoardName($title))
 					$response["errors"]["title"] = "Le nom doit être compris entre 3 et 55 caractères.";
 
-				$desc = trim(htmlentities($request->post('desc'), ENT_QUOTES | ENT_HTML5));
+				$desc = trim(htmlspecialchars($request->post('desc'), ENT_QUOTES | ENT_HTML5));
 				$colorpicker = $request->post('colorpicker');
 				if(!in_array($colorpicker, Config::get('COLORS')))
 					$colorpicker = Config::get('COLORS')[0];
@@ -70,11 +70,11 @@ class ApiController extends Controller
 
 				if($boards->isUserOwner(User::id(), $board_id))
 				{
-					$title = trim(htmlentities($request->post('title'), ENT_QUOTES | ENT_HTML5));
+					$title = trim(htmlspecialchars($request->post('title'), ENT_QUOTES | ENT_HTML5));
 					if(!$boards->validateBoardName($title))
 						$response["errors"]["title"] = "Le nom doit être compris entre 3 et 55 caractères.";
 
-					$desc = trim(htmlentities($request->post('desc'), ENT_QUOTES | ENT_HTML5));
+					$desc = trim(htmlspecialchars($request->post('desc'), ENT_QUOTES | ENT_HTML5));
 					$colorpicker = $request->post('colorpicker');
 					if(!in_array($colorpicker, Config::get('COLORS')))
 						$colorpicker = Config::get('COLORS')[0];
@@ -188,11 +188,44 @@ class ApiController extends Controller
 						}
 					break;
 
-					case 'accept': break;
+					case 'accept':
+						if($request->hasPost(['invitation_id']))
+						{
+							$user_id = User::id();
+							$invitation_id = $request->post('invitation_id');
 
-					case 'decline': break;
+							$response["success"] = $boards->acceptInvite($user_id, $invitation_id);
 
-					case 'leave': break;
+							echo json_encode($response);
+							exit();
+						}
+					break;
+
+					case 'decline':
+						if($request->hasPost(['invitation_id']))
+						{
+							$user_id = User::id();
+							$invitation_id = $request->post('invitation_id');
+
+							$response["success"] = $boards->declineInvite($user_id, $invitation_id);
+
+							echo json_encode($response);
+							exit();
+						}
+					break;
+
+					case 'leave':
+						if($request->hasPost(['board_id']))
+						{
+							$user_id = User::id();
+							$board_id = $request->post('board_id');
+
+							$response["success"] = $boards->leave($user_id, $board_id);
+
+							echo json_encode($response);
+							exit();
+						}
+					break;
 
 					default: ;
 				}

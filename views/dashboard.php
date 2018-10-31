@@ -1,6 +1,10 @@
 <?php use lib\{Config}; ?>
 
 <div id="dashboard">
+	<?php
+	if($user_invitations->num_rows >= 1)
+	{
+	?>
 	<h1><i class="fas fa-user-plus"></i> Invitations</h1>
 	<table class="table">
 		<thead>
@@ -15,9 +19,8 @@
 		<?php
 		foreach($user_invitations as $board_invite)
 		{
-			//echo var_dump($board_invite);
 			?>
-			<tr>
+			<tr data-invitationid="<?= $board_invite['invitation_id']; ?>">
 				<td><?= '<b>'.$board_invite['board_name'].'</b> par'; ?>
 					<?= '<b>'.$board_invite['owner_name'].'</b> (<b>'.$board_invite['owner_email'].'</b>)'; ?></td>
 				<td><?= date('d/m/Y à H:i:s', $board_invite['invitation_date']); ?></td>
@@ -31,6 +34,9 @@
 		?>
 		</tbody>
 	</table>
+	<?php
+	}
+	?>
 
 	<a class="board newboard" onClick="showNewBoardModal()" href="javascript:void(0)">
 		<i class="fas fa-plus"></i>&nbsp;&nbsp;Créer un nouveau projet

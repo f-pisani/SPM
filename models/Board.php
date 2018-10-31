@@ -78,7 +78,11 @@ class Board extends Model
 	{
 		$user_id = $this->escape_string($user_id);
 
-		return $this->rawSQL("SELECT * FROM boards WHERE user_id = '$user_id'");
+		return $this->rawSQL("SELECT * FROM boards WHERE user_id = '$user_id'
+			                  UNION
+							  SELECT B.*
+							  FROM boards B, board_user BU
+							  WHERE BU.board_id = B.id AND BU.user_id = '$user_id' ORDER BY name ASC");
 	}
 
 
@@ -100,7 +104,8 @@ class Board extends Model
 		          FROM users U, boards B, board_invitations BI
 				  WHERE BI.user_id = '$user_id' AND
 				        B.id = BI.board_id AND
-						U.id = B.user_id
+						U.id = B.user_id AND
+						BI.accepted = '0'
 				  ORDER BY BI.created_at DESC";
 
 		return $this->rawSQL($query);
@@ -117,7 +122,9 @@ class Board extends Model
 		$user_id = $this->escape_string($user_id);
 		$board_id = $this->escape_string($board_id);
 
-		return $this->rawSQL("SELECT * FROM boards WHERE id = '$board_id' AND user_id = '$user_id'")->num_rows;
+		return $this->rawSQL("SELECT * FROM boards WHERE id = '$board_id' AND user_id = '$user_id'
+			 				  UNION
+							  SELECT B.* FROM boards B, board_user BU WHERE BU.board_id = B.id AND BU.board_id = '$board_id' AND BU.user_id = '$user_id'")->num_rows;
 	}
 
 
@@ -209,6 +216,62 @@ class Board extends Model
 		$this->rawSQL("DELETE FROM board_invitations WHERE accepted = '1' AND board_id = '$board_id' AND user_id = '$user_id'");
 
 		return $this->rawSQL("DELETE FROM board_user WHERE board_id = '$board_id' AND user_id = '$user_id'");
+	}
+
+
+	/*******************************************************************************************************************
+	 * public function acceptInvite($user_id, $invitation_id)
+	 *
+	 * Accept $invitation_id for $user_id
+	 */
+	public function acceptInvite($user_id, $invitation_id)
+	{
+		$user_id = $this->escape_string($user_id);
+		$invitation_id = $this->escape_string($invitation_id);
+
+		$result = $this->rawSQL("SELECT board_id FROM board_invitations WHERE accepted = '0' AND id = '$invitation_id' AND user_id = '$user_id'");
+
+		if($result->num_rows == 0)
+			return false;
+
+		$board_id = $result->fetch_object()->board_id;
+		$this->rawSQL("UPDATE board_invitations SET accepted = '1', updated_at = '".time()."' WHERE id = '$invitation_id' AND user_id = '$user_id'");
+		$this->rawSQL("INSERT INTO board_user VALUES(null, '$board_id', '$user_id', '".time()."')");
+
+		return true;
+	}
+
+
+	/*******************************************************************************************************************
+	 * public function declineInvite($user_id, $invitation_id)
+	 *
+	 * Decline $invitation_id for $user_id
+	 */
+	public function declineInvite($user_id, $invitation_id)
+	{
+		$user_id = $this->escape_string($user_id);
+		$invitation_id = $this->escape_string($invitation_id);
+
+		$this->rawSQL("DELETE FROM board_invitations WHERE id = '$invitation_id' AND user_id = '$user_id'");
+
+		return true;
+	}
+
+
+	/*******************************************************************************************************************
+	 * public function leave($user_id, $board_id)
+	 *
+	 * $user_id leave $board_id
+	 */
+	public function leave($user_id, $board_id)
+	{
+		$user_id = $this->escape_string($user_id);
+		$board_id = $this->escape_string($board_id);
+
+		$this->rawSQL("DELETE FROM board_invitations WHERE accepted = '1' AND board_id = '$board_id' AND user_id = '$user_id'");
+		$this->rawSQL("DELETE FROM board_user WHERE board_id = '$board_id' AND user_id = '$user_id'");
+
+		return true;
 	}
 
 
