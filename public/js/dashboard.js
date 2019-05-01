@@ -73,14 +73,14 @@ function acceptInvite(invitation_id)
 			data = $.parseJSON(data);
 
 			$(".table tbody tr[data-invitationid='"+invitation_id+"']").slideUp(400, () => {
-				$(this).remove();
-			});
+				$(".table tbody tr[data-invitationid='"+invitation_id+"']").remove();
 
-			if($(".table tbody tr").length == 0)
-			{
-				$(".table").slideUp(400, () => { $(this).remove(); });
-				$("h1").slideUp(400, () => { $(this).remove(); });
-			}
+				if($(".table tbody tr").length == 0)
+				{
+					$(".table").slideUp(400, () => { $(".table").remove(); });
+					$("h1").slideUp(400, () => { $("h1").remove(); });
+				}
+			});
 		}
 	});
 }
@@ -98,14 +98,14 @@ function declineInvite(invitation_id)
 			data = $.parseJSON(data);
 
 			$(".table tbody tr[data-invitationid='"+invitation_id+"']").slideUp(400, () => {
-				$(this).remove();
+				$(".table tbody tr[data-invitationid='"+invitation_id+"']").remove();
+				
+				if($(".table tbody tr").length == 0)
+				{
+					$(".table").slideUp(400, () => { $(".table tbody tr").remove(); });
+					$("h1").slideUp(400, () => { $("h1").remove(); });
+				}
 			});
-			
-			if($(".table tbody tr").length == 0)
-			{
-				$(".table").slideUp(400, () => { $(this).remove(); });
-				$("h1").slideUp(400, () => { $(this).remove(); });
-			}
 		}
 	});
 }

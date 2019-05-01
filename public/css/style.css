@@ -704,9 +704,12 @@ html, body
 
 	width: 20%;
 
+	margin-right: 32px;
+
 	color: white;
 
 	border-radius: 4px;
+	border: 1px solid black;
 }
 
 #board .board-lists-container .board-list .board-list-header, #board .board-lists-container .board-list .board-list-footer
@@ -742,6 +745,8 @@ html, body
 
 #board .board-lists-container .board-list .board-list-tasks::-webkit-scrollbar {
     width: 8px;
+
+	background-color: rgba(255, 255, 255, 0.1);
 }
 
 

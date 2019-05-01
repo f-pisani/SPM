@@ -35,7 +35,11 @@ use models\{User};
 		</div>
 	</div>
 	<div class="board-lists-container">
-		<div class="board-list" style="background-color: #<?= $q_board->color; ?>">
+		<?php
+		for($x=0; $x<4; $x++)
+		{
+		?>
+		<div class="board-list" style="background-color: #<?= $q_board->color; ?>; border-color: #<?= $q_board->color; ?>">
 			<div class="board-list-header">To Do</div>
 			<div class="board-list-tasks">
 				<?php
@@ -47,7 +51,7 @@ use models\{User};
 					Commit Push Publish Repeat
 					Commit Push Publish Repeat
 					<div class="task-footer">
-						<i class="fas fa-bars"></i>
+						<i class="fas fa-eye"></i>
 						<span class="author">Florian Pisani&nbsp;<img src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png"></span>
 					</div>
 				</div>
@@ -57,6 +61,9 @@ use models\{User};
 			</div>
 			<a class="board-list-footer" href="javascript:void(0)"><i class="fas fa-plus"></i>&nbsp;&nbsp;Nouvelle tâche</a>
 		</div>
+		<?php
+		}
+		?>
 	</div>
 </div>
 

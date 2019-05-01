@@ -2,7 +2,7 @@
 
 <div id="dashboard">
 	<?php
-	if($user_invitations->num_rows >= 1)
+	if($user_invitations != false && $user_invitations->num_rows >= 1)
 	{
 	?>
 	<h1><i class="fas fa-user-plus"></i> Invitations</h1>

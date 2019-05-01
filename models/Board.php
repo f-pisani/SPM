@@ -122,9 +122,14 @@ class Board extends Model
 		$user_id = $this->escape_string($user_id);
 		$board_id = $this->escape_string($board_id);
 
-		return $this->rawSQL("SELECT * FROM boards WHERE id = '$board_id' AND user_id = '$user_id'
-			 				  UNION
-							  SELECT B.* FROM boards B, board_user BU WHERE BU.board_id = B.id AND BU.board_id = '$board_id' AND BU.user_id = '$user_id'")->num_rows;
+		$result = $this->rawSQL("SELECT * FROM boards WHERE id = '$board_id' AND user_id = '$user_id'
+			 				  	 UNION
+							  	 SELECT B.* FROM boards B, board_user BU WHERE BU.board_id = B.id AND BU.board_id = '$board_id' AND BU.user_id = '$user_id'");
+
+		if(!$result)
+			return 0;
+
+		return $result->num_rows;
 	}
 
 

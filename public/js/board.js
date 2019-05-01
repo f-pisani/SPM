@@ -37,8 +37,8 @@ function showBoardSettingsModal()
 		$("#modal-settings").css('display', 'block');
 		$("#modal-settings").css('top', $(window).height());
 		$("#modal-settings").css('width', $(window).width());
-		$("#modal-settings").css('min-height', $(document).height()-offset_top);
-		$("#modal-settings").animate({top: offset_top+2}, 250);
+		$("#modal-settings").css('min-height', $(window).height()-offset_top);
+		$("#modal-settings").animate({top: offset_top+2}, 250, (e) => { $(".board-lists-container").toggle(); });
 
 		if(!init_form)
 		{
@@ -67,6 +67,7 @@ function hideBoardSettingsModal()
 {
 	$("#modal-settings").animate({top: $(window).height()}, 250, (e) => {
 		$("#modal-settings").css('display', 'none'); // Once animation complete, display: none;
+		$(".board-lists-container").toggle();
 	});
 }
 
@@ -114,8 +115,8 @@ function showBoardInvitesModal()
 		$("#modal-invites").css('display', 'block');
 		$("#modal-invites").css('top', $(window).height());
 		$("#modal-invites").css('width', $(window).width());
-		$("#modal-invites").css('min-height', $(document).height()-offset_top);
-		$("#modal-invites").animate({top: offset_top+2}, 250);
+		$("#modal-invites").css('min-height', $(window).height()-offset_top);
+		$("#modal-invites").animate({top: offset_top+2}, 250, (e) => { $(".board-lists-container").toggle(); });
 
 		if(!init_invitesForm)
 		{
@@ -136,6 +137,7 @@ function hideBoardInvitesModal()
 {
 	$("#modal-invites").animate({top: $(window).height()}, 250, (e) => {
 		$("#modal-invites").css('display', 'none'); // Once animation complete, display: none;
+		$(".board-lists-container").toggle();
 	});
 }
 
